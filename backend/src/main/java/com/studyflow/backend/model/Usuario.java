@@ -15,12 +15,10 @@ import lombok.*;
 @NoArgsConstructor
 
 public class Usuario {
+    @Setter
     @Id
     @GeneratedValue
     private Long id;
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+    private String login;
 
 }
