@@ -1,6 +1,6 @@
 package com.focusstudy.backend.model.service;
 
-import com.focusstudy.backend.model.Materia;
+import com.focusstudy.backend.model.entity.Materia;
 import com.focusstudy.backend.model.repositories.MateriaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

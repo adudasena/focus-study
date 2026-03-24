@@ -1,6 +1,6 @@
 package com.focusstudy.backend.controller;
 
-import com.focusstudy.backend.model.SessaoEstudo;
+import com.focusstudy.backend.model.entity.SessaoEstudo;
 import com.focusstudy.backend.model.service.SessaoEstudoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

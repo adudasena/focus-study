@@ -1,4 +1,4 @@
-package com.focusstudy.backend.model;
+package com.focusstudy.backend.model.entity;
 
 import jakarta.persistence.*;
 import lombok.*;

@@ -1,6 +1,6 @@
 package com.focusstudy.backend.controller;
 
-import com.focusstudy.backend.model.Materia;
+import com.focusstudy.backend.model.entity.Materia;
 import com.focusstudy.backend.model.service.MateriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

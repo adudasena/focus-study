@@ -1,55 +1,54 @@
 package com.focusstudy.backend.controller;
 
-import com.focusstudy.backend.model.Usuario;
-import com.focusstudy.backend.model.repositories.UsuarioRepository;
+import com.focusstudy.backend.controller.DTO.TokenDTO;
+import com.focusstudy.backend.model.entity.Usuario;
 import com.focusstudy.backend.model.service.TokenService;
+import com.focusstudy.backend.model.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Objects;
-
 @RestController
-@RequestMapping("auth")
+@RequestMapping("/auth")
 public class AuthenticationController {
 
     @Autowired
-    private AuthenticationManager authenticationManager;
-
-    @Autowired
-    private UsuarioRepository repository;
+    private AuthenticationManager manager;
 
     @Autowired
     private TokenService tokenService;
 
+    @Autowired
+    private UsuarioService usuarioService;
+
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody Usuario data) {
-        // Note que aqui usamos getUsername() e getPassword() para autenticar
-        var usernamePassword = new UsernamePasswordAuthenticationToken(data.getUsername(), data.getPassword());
-        var auth = this.authenticationManager.authenticate(usernamePassword);
+    public ResponseEntity<?> efetuarLogin(@RequestBody Usuario usuario) {
+        try {
+            // Segue o padrão do prof: usa getUsername e getPassword
+            var authenticationToken = new UsernamePasswordAuthenticationToken(usuario.getUsername(), usuario.getPassword());
+            Authentication authentication = manager.authenticate(authenticationToken);
 
-        var token = tokenService.gerarToken((Usuario) auth.getPrincipal());
+            // O principal aqui é o UserDetails que o builder criou
+            String token = tokenService.gerarToken((UserDetails) authentication.getPrincipal());
 
-        return ResponseEntity.ok(token);
+            return ResponseEntity.ok(new TokenDTO(token));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Erro ao autenticar: " + e.getMessage());
+        }
     }
 
     @PostMapping("/register")
-    public ResponseEntity register(@RequestBody Usuario data) {
-        // 1. Verifica se o usuário já existe usando o novo nome do campo
-        if(this.repository.findByUsername(data.getUsername()) != null) return ResponseEntity.badRequest().build();
-
-        // 2. Criptografa a senha que veio do Postman
-        String encryptedPassword = new BCryptPasswordEncoder().encode(data.getPassword());
-
-        // 3. USA O SETTER PARA SALVAR A SENHA CRIPTOGRAFADA (Aqui estava o seu erro!)
-        data.setPassword(encryptedPassword);
-
-        // 4. Salva no banco
-        this.repository.save(data);
-
-        return ResponseEntity.ok().build();
+    public ResponseEntity<?> criarUsuario(@RequestBody Usuario usuario) {
+        try {
+            // Usa o seu Service para salvar, igual a lógica de camadas do prof
+            usuarioService.criarUsuario(usuario);
+            return ResponseEntity.status(201).body(true);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }
