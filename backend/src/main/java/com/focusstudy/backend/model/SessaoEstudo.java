@@ -1,10 +1,9 @@
 package com.focusstudy.backend.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
+
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -12,15 +11,22 @@ import lombok.*;
 @Table (name = "sessoes")
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
 
 public class SessaoEstudo {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    private LocalDateTime startTime; // Data e hora do início do estudo
 
+    private Integer durationMinutes; // Duração em minutos
+
+    @ManyToOne // Muitas sessões podem pertencer a uma única matéria
+    @JoinColumn(name = "materia_id")
+    private Materia materia;
+
+    // Cada sessão a um usuário
+    @ManyToOne
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario;
 }

@@ -22,7 +22,7 @@ public class TokenService {
             Algorithm algorithm = Algorithm.HMAC256(secret);
             return JWT.create()
                     .withIssuer("focusstudy-api")
-                    .withSubject(usuario.getLogin()) // Identifica quem é o dono do token
+                    .withSubject(usuario.getUsername()) // Identifica quem é o dono do token
                     .withExpiresAt(genExpirationDate()) // Define validade de 2 horas
                     .sign(algorithm);
         } catch (JWTCreationException exception) {
@@ -30,7 +30,7 @@ public class TokenService {
         }
     }
 
-    public String validarToken(String token) {
+    public String validateToken(String token) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
             return JWT.require(algorithm)
