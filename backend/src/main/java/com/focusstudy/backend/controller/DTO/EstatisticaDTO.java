@@ -8,5 +8,5 @@ import lombok.Getter;
 public class EstatisticaDTO {
     private String nome;
     private String cor;
-    private Long minutos;
+    private Long segundosTotais; //agora em segundos
 }

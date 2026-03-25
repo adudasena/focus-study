@@ -1,5 +1,6 @@
 package com.focusstudy.backend.controller;
 
+import com.focusstudy.backend.controller.DTO.EstatisticaDTO;
 import com.focusstudy.backend.model.entity.SessaoEstudo;
 import com.focusstudy.backend.model.service.SessaoEstudoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ public class SessaoEstudoController {
 
     //dashboard
     @GetMapping("/estatisticas")
-    public ResponseEntity<List<Object[]>> obterEstatisticas() {
+    public ResponseEntity<List<EstatisticaDTO>> obterEstatisticas() {
         return ResponseEntity.ok(service.obterEstatisticas());
     }
 

@@ -1,5 +1,6 @@
 package com.focusstudy.backend.model.service;
 
+import com.focusstudy.backend.controller.DTO.EstatisticaDTO;
 import com.focusstudy.backend.model.entity.SessaoEstudo;
 import com.focusstudy.backend.model.repositories.SessaoEstudoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ public class SessaoEstudoService {
     }
 
     //metodo pra chamar a query do dashboard (da repository)
-    public List<Object[]> obterEstatisticas() {
+    public List<EstatisticaDTO> obterEstatisticas() {
         return repository.findTempoTotalPorMateria();
     }
 

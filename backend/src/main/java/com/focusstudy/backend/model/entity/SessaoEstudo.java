@@ -17,11 +17,11 @@ public class SessaoEstudo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private LocalDateTime startTime; // Data e hora do início do estudo
+    private LocalDateTime startTime;
 
-    private Integer durationMinutes; // Duração em minutos
+    private Integer durationSeconds;
 
-    @ManyToOne // Muitas sessões podem pertencer a uma única matéria
+    @ManyToOne // muitas sessões podem pertencer a uma única matéria
     @JoinColumn(name = "materia_id")
     private Materia materia;
 

@@ -4,59 +4,53 @@ import api from '@/api'
 import { Doughnut } from 'vue-chartjs'
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js'
 
-// Registramos apenas o necessário. Repare que removemos o Legend nativo daqui!
 ChartJS.register(ArcElement, Tooltip)
 
 const carregando = ref(true)
 const dadosGrafico = ref(null)
-const materiasComTempo = ref([]) // Lista para a legenda personalizada
+const materiasComTempo = ref([]) //lista para a legenda personalizada
 
-// Busca as matérias coloridas e o tempo total que você salvou no Timer!
+//busca as matérias coloridas e o tempo total 
 const carregarDados = async () => {
   try {
     const res = await api.get('/sessoes/estatisticas')
     
-    //agora acessa .nome, .cor e .minutos em vez de item, item
-    const labels = res.data.map(item => item.nome) 
-    const cores = res.data.map(item => item.cor)  
-    const tempos = res.data.map(item => item.minutos)
+    const temposParaGrafico = res.data.map(item => item.segundosTotais / 60)
 
-    materiasComTempo.value = res.data.map(item => ({
-        name: item.nome,
-        color: item.cor,
-        totalMinutes: item.minutos,
-        formattedTime: item.minutos < 1 
-            ? `${Math.round(item.minutos * 60)} seg` 
-            : `${Math.round(item.minutos)} min`
-    }))
+    materiasComTempo.value = res.data.map(item => {
+        const s = item.segundosTotais;
+        const min = Math.floor(s / 60);
+        const seg = s % 60;
+        
+        return {
+            name: item.nome,
+            color: item.cor,
+            // Formatação: se for menos de 1 min, mostra só segundos
+            formattedTime: min > 0 ? `${min}min ${seg}s` : `${seg}s`
+        }
+    })
 
     dadosGrafico.value = {
-      labels: labels, // Mantemos os nomes aqui para o Tooltip (quando passa o mouse)
+      labels: res.data.map(item => item.nome),
       datasets: [{
-        backgroundColor: cores,
-        data: tempos,
-        borderWidth: 2,
-        borderColor: '#ffffff', // Bordinha branca entre as fatias
+        backgroundColor: res.data.map(item => item.cor),
+        data: temposParaGrafico
       }]
     }
     carregando.value = false
-  } catch (e) {
-    console.error("Erro no dashboard", e)
-  }
+  } catch (e) { console.error(e) }
 }
 
-// Configurações do Tooltip (o que aparece quando passa o mouse)
 const options = {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
-        // Desativamos a legenda nativa totalmente
         legend: {
             display: false
         },
         tooltip: {
             callbacks: {
-                // Aqui nós dizemos: mostre o nome da matéria e o tempo em minutos
+          //mostrar nome e tem
                 label: function(context) {
                     let label = context.label || '';
                     if (label) {

@@ -27,21 +27,21 @@ function pausarTimer() {
 
 async function finalizarESalvar() {
     pausarTimer()
-    if (segundos.value < 10) return alert("Sessão muito curta para salvar!")
+    if (segundos.value < 5) return alert("Sessão muito curta!")
 
     const payload = {
-        startTime: new Date().toISOString(), // Simulação simples de data
-        durationMinutes: Math.floor(segundos.value / 60) || 1, // Mínimo 1 min
-        materia: { id: materiaSelecionada.value }, // Envia o ID da matéria selecionada
-        usuario: { id: 1 } // ID estático para teste, como no seu controller
+        startTime: new Date().toISOString(),
+        durationSeconds: segundos.value, //envia os segundos puros 
+        materia: { id: materiaSelecionada.value },
+        usuario: { id: 1 }
     }
 
     try {
         await api.post('/sessoes/novo', payload)
-        alert("Sessão de estudo salva! 🚀")
+        alert("Sessão salva com precisão! 🚀")
         segundos.value = 0
     } catch (e) {
-        alert("Erro ao salvar sessão.")
+        alert("Erro ao salvar.")
     }
 }
 

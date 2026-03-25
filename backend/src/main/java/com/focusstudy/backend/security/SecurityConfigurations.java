@@ -33,6 +33,7 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.POST, "/materias/novo").permitAll()
                         .requestMatchers(HttpMethod.GET, "/materias").permitAll()
                         .requestMatchers(HttpMethod.POST, "/sessoes/novo").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/sessoes/estatisticas").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
