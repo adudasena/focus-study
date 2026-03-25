@@ -16,6 +16,11 @@ public class SessaoEstudoService {
         return repository.findAll();
     }
 
+    //metodo pra chamar a query do dashboard (da repository)
+    public List<Object[]> obterEstatisticas() {
+        return repository.findTempoTotalPorMateria();
+    }
+
     public SessaoEstudo salvar(SessaoEstudo sessao) {
         return repository.save(sessao);
     }

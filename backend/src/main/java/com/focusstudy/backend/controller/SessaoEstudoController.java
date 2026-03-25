@@ -20,6 +20,12 @@ public class SessaoEstudoController {
         return ResponseEntity.ok(service.listarTodas());
     }
 
+    //dashboard
+    @GetMapping("/estatisticas")
+    public ResponseEntity<List<Object[]>> obterEstatisticas() {
+        return ResponseEntity.ok(service.obterEstatisticas());
+    }
+
     @PostMapping("/novo")
     public ResponseEntity<Boolean> salvar(@RequestBody SessaoEstudo sessao) {
         try {
