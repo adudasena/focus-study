@@ -10,8 +10,11 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Materia {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false)
     private String name;
 }

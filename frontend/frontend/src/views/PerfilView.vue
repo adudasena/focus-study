@@ -23,12 +23,11 @@ const realizarLogout = () => {
 <template>
   <div class="perfil-container">
     <h1>👤 Meu Perfil</h1>
-    <p>Bem-vinda, {{ nomeUsuario }}! Este é seu painel.</p>
+    <p>Bem-vindo(a), {{ nomeUsuario }}! Este é seu painel.</p>
     
     <div class="card-usuario">
       <h3>Dados da Conta</h3>
       <p><strong>Usuário:</strong> {{ nomeUsuario }}</p> 
-      <p><strong>Status:</strong> Conectado via Porta 5174</p>
     </div>
 
     <button @click="realizarLogout" class="btn-sair">Encerrar Sessão</button>
