@@ -13,4 +13,7 @@ public interface SessaoEstudoRepository extends JpaRepository<SessaoEstudo, Long
     @Query("SELECT new com.focusstudy.backend.controller.DTO.EstatisticaDTO(s.materia.name, s.materia.color, SUM(s.durationSeconds)) " +
             "FROM SessaoEstudo s GROUP BY s.materia.name, s.materia.color")
     List<EstatisticaDTO> findTempoTotalPorMateria();
-}
+
+    //busca a última sessão salva
+    java.util.Optional<SessaoEstudo> findFirstByOrderByStartTimeDesc();
+    }

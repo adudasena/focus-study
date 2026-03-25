@@ -27,6 +27,14 @@ public class SessaoEstudoController {
         return ResponseEntity.ok(service.obterEstatisticas());
     }
 
+    @GetMapping("/ultima")
+    public ResponseEntity<SessaoEstudo> buscarUltima() {
+        return service.buscarUltimaSessao()
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.noContent().build());
+
+    }
+
     @PostMapping("/novo")
     public ResponseEntity<Boolean> salvar(@RequestBody SessaoEstudo sessao) {
         try {
@@ -35,5 +43,6 @@ public class SessaoEstudoController {
         } catch (Exception e) {
             return ResponseEntity.status(400).body(false);
         }
+
     }
 }

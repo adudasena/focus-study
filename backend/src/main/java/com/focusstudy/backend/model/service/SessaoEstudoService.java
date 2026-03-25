@@ -6,6 +6,7 @@ import com.focusstudy.backend.model.repositories.SessaoEstudoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SessaoEstudoService {
@@ -24,5 +25,9 @@ public class SessaoEstudoService {
 
     public SessaoEstudo salvar(SessaoEstudo sessao) {
         return repository.save(sessao);
+    }
+
+    public Optional<SessaoEstudo> buscarUltimaSessao() {
+        return repository.findFirstByOrderByStartTimeDesc();
     }
 }
