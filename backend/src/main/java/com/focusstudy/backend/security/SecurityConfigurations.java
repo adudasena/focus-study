@@ -25,7 +25,6 @@ public class SecurityConfigurations {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
                 .csrf(csrf -> csrf.disable())
-                // ADICIONE ESTA LINHA ABAIXO:
                 .cors(org.springframework.security.config.Customizer.withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize

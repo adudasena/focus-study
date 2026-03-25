@@ -1,6 +1,5 @@
 <script setup>
 import { RouterLink, RouterView, useRoute } from 'vue-router'
-import api from '@/api';
 
 const route = useRoute()
 </script>
@@ -12,7 +11,7 @@ const route = useRoute()
         <RouterLink to="/">Dashboard</RouterLink>
         <RouterLink to="/sessoes">Minhas Sessões</RouterLink>
         <RouterLink to="/nova-materia">Nova Matéria</RouterLink>
-        <a href="#" @click="localStorage.removeItem('token'); $router.push('/login')">Sair</a>
+        <RouterLink to="/perfil">Meu Perfil</RouterLink>
       </div>
     </nav>
   </header>
