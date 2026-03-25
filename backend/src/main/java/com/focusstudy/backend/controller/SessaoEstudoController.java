@@ -20,9 +20,13 @@ public class SessaoEstudoController {
         return ResponseEntity.ok(service.listarTodas());
     }
 
-    @PostMapping
-    public ResponseEntity salvar(@RequestBody SessaoEstudo sessao) {
-        service.salvar(sessao);
-        return ResponseEntity.ok().build();
+    @PostMapping("/novo")
+    public ResponseEntity<Boolean> salvar(@RequestBody SessaoEstudo sessao) {
+        try {
+            service.salvar(sessao);
+            return ResponseEntity.status(201).body(true);
+        } catch (Exception e) {
+            return ResponseEntity.status(400).body(false);
+        }
     }
 }
