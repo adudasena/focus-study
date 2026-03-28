@@ -6,6 +6,7 @@ const nomeMateria = ref('')
 //nova ref para a cor, começando com um verde padrão
 const corMateria = ref('#42b983') 
 const materias = ref([])
+const userRole = ref(localStorage.getItem('usuario_role')); //role do storage
 
 async function carregarMaterias() {
     try {
@@ -62,6 +63,11 @@ onMounted(carregarMaterias)
             <div v-for="m in materias" :key="m.id" class="materia-item">
                 <span class="cor-indicador" :style="{ backgroundColor: m.color }"></span>
                 <span class="materia-nome">{{ m.name }}</span>
+
+                <button v-if="userRole === 'ADMIN'" @click="editarMateria(m)" class="btn-editar">
+                    ✏️
+                </button>
+                
             </div>
         </div>
     </div>

@@ -3,19 +3,20 @@ import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
-const nomeUsuario = ref('Convidado') // Valor padrão
 
-onMounted(() => {
-  // Pega o nome que salvamos no login
-  const nomeSalvo = localStorage.getItem('usuarioNome')
-  if (nomeSalvo) {
-    nomeUsuario.value = nomeSalvo
-  }
+//pega nome e a role do storage para mostrar no perfil e controlar acesso
+const nomeUsuario = ref(localStorage.getItem('usuarioNome') || 'Usuário')
+const userRole = ref(localStorage.getItem('usuario_role'))
+
+//lógica do nome
+const labelRole = computed(() => {
+  if (userRole.value === 'ADMIN') return 'Administrador'
+  if (userRole.value === 'USER') return 'Estudante'
+  return 'Visitante'
 })
 
 const realizarLogout = () => {
-  localStorage.removeItem('token')
-  localStorage.removeItem('usuarioNome') // Limpa o nome também
+  localStorage.clear() // Limpa TUDO de uma vez
   router.push('/login')
 }
 </script>
@@ -27,7 +28,12 @@ const realizarLogout = () => {
     
     <div class="card-usuario">
       <h3>Dados da Conta</h3>
-      <p><strong>Usuário:</strong> {{ nomeUsuario }}</p> 
+      <p><strong>Nome:</strong> {{ nomeUsuario }}</p> 
+      <p><strong>Nível de Acesso:</strong> 
+        <span :class="userRole === 'ADMIN' ? 'txt-admin' : 'txt-user'">
+          {{ labelRole }}
+        </span>
+      </p>
     </div>
 
     <button @click="realizarLogout" class="btn-sair">Encerrar Sessão</button>
@@ -59,4 +65,8 @@ const realizarLogout = () => {
 .btn-sair:hover {
   background-color: #cc0000;
 }
+
+.txt-admin { color: #e74c3c; font-weight: bold; } /* Vermelho para Admin */
+.txt-user { color: #2ecc71; font-weight: bold; }  /* Verde para Estudante */
+.btn-editar { margin-left: auto; cursor: pointer; background: none; border: none; }
 </style>

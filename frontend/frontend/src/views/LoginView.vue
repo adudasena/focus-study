@@ -45,8 +45,12 @@ const realizarLogin = async () => {
         //salva o token JWT
         localStorage.setItem('token', response.data.token);
         
+        //salva o nome do usuário para mostrar no perfil
         localStorage.setItem('usuarioNome', response.data.nome || usuario.value.username);
 
+        //salvar a role do usuário
+        localStorage.setItem('usuario_role', response.data.role);
+        
         router.push('/');
     } catch (e) {
         erro.value = 'Usuário ou senha inválidos. Tente novamente.';
