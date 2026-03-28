@@ -20,6 +20,7 @@ public class TokenService {
             return JWT.create()
                     .withIssuer("focusstudy-api")
                     .withSubject(usuario.getUsername()) // Identifica quem é o dono do token
+                    .withClaim("role", usuario.getAuthorities().stream().findFirst().get().getAuthority())
                     .withExpiresAt(new Date(System.currentTimeMillis() + 3600000))
                     .sign(algorithm);
         } catch (JWTCreationException exception) {

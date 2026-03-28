@@ -28,13 +28,23 @@ public class SecurityConfigurations {
                 .cors(org.springframework.security.config.Customizer.withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
+                        //públicas
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/materias/novo").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/materias").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/sessoes/novo").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/sessoes/estatisticas").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/sessoes/ultima").permitAll()
+
+                        // matérias- criar e ver é para todos logados (user ou admin)
+                        .requestMatchers(HttpMethod.POST, "/materias/novo").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/materias").authenticated()
+                        // editar matéria- só ADMIN
+                        .requestMatchers(HttpMethod.PUT, "/materias/**").hasRole("ADMIN")
+
+                        // sessões- criar e ver pra todos
+                        .requestMatchers(HttpMethod.POST, "/sessoes/novo").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/sessoes/estatisticas").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/sessoes/ultima").authenticated()
+                        // excluir sessão- admim
+                        .requestMatchers(HttpMethod.DELETE, "/sessoes/**").hasRole("ADMIN")
+
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
