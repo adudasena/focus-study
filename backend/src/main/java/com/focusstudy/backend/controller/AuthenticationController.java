@@ -28,14 +28,26 @@ public class AuthenticationController {
     @PostMapping("/login")
     public ResponseEntity<?> efetuarLogin(@RequestBody Usuario usuario) {
         try {
-            // Segue o padrão do prof: usa getUsername e getPassword
             var authenticationToken = new UsernamePasswordAuthenticationToken(usuario.getUsername(), usuario.getPassword());
             Authentication authentication = manager.authenticate(authenticationToken);
 
-            // O principal aqui é o UserDetails que o builder criou
+            // gera o token
             String token = tokenService.gerarToken((UserDetails) authentication.getPrincipal());
 
-            return ResponseEntity.ok(new TokenDTO(token));
+            // busca o usuário completo no banco para pegar a Role e o Nome real
+            Usuario userLogado = usuarioService.buscarPorUsername(usuario.getUsername());
+
+            // pegamos a primeira role da lista
+            String role = userLogado.getPapeis().get(0).getPapel();
+
+            // retorna TUDO para o Vue
+            return ResponseEntity.ok(new TokenDTO(
+                    token,
+                    userLogado.getUsername(),
+                    role,
+                    userLogado.getId()
+            ));
+
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Erro ao autenticar: " + e.getMessage());
         }
@@ -44,10 +56,11 @@ public class AuthenticationController {
     @PostMapping("/register")
     public ResponseEntity<?> criarUsuario(@RequestBody Usuario usuario) {
         try {
-            // Usa o seu Service para salvar, igual a lógica de camadas do prof
+            // O segredo está aqui dentro: o service vai preparar o usuário antes de salvar
             usuarioService.criarUsuario(usuario);
             return ResponseEntity.status(201).body(true);
         } catch (Exception e) {
+            // Se der erro (ex: usuário já existe), ele cai aqui
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }

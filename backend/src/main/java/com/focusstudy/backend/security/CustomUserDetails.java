@@ -26,10 +26,7 @@ public class CustomUserDetails implements UserDetailsService {
         return User.builder()
                 .username(usuario.getUsername())
                 .password(usuario.getPassword())
-                // O .roles() espera apenas o nome, sem o ROLE_
-                .roles(usuario.getPapeis().stream()
-                        .map(p -> p.getPapel().replace("ROLE_", ""))
-                        .toArray(String[]::new))
+                .authorities(usuario.getAuthorities())
                 .build();
     }
 }

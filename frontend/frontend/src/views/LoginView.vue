@@ -50,7 +50,9 @@ const realizarLogin = async () => {
 
         //salvar a role do usuário
         localStorage.setItem('usuario_role', response.data.role);
-        
+
+        localStorage.setItem('usuario_id', response.data.id);
+
         router.push('/');
     } catch (e) {
         erro.value = 'Usuário ou senha inválidos. Tente novamente.';

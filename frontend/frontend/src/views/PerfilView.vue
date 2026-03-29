@@ -1,6 +1,6 @@
 <script setup>
-import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { ref, onMounted, computed } from 'vue'
 
 const router = useRouter()
 
@@ -12,7 +12,7 @@ const userRole = ref(localStorage.getItem('usuario_role'))
 const labelRole = computed(() => {
   if (userRole.value === 'ADMIN') return 'Administrador'
   if (userRole.value === 'USER') return 'Estudante'
-  return 'Visitante'
+  return 'Desconecido'
 })
 
 const realizarLogout = () => {
@@ -29,7 +29,7 @@ const realizarLogout = () => {
     <div class="card-usuario">
       <h3>Dados da Conta</h3>
       <p><strong>Nome:</strong> {{ nomeUsuario }}</p> 
-      <p><strong>Nível de Acesso:</strong> 
+      <p><strong>Nível de Acesso: </strong> 
         <span :class="userRole === 'ADMIN' ? 'txt-admin' : 'txt-user'">
           {{ labelRole }}
         </span>

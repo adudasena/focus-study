@@ -14,20 +14,27 @@ public class SessaoEstudoService {
     @Autowired
     private SessaoEstudoRepository repository;
 
-    public List<SessaoEstudo> listarTodas() {
-        return repository.findAll();
+    // Listar apenas as sessões do usuário logado
+    public List<SessaoEstudo> listarPorUsuario(Long usuarioId) {
+        return repository.findByUsuarioId(usuarioId);
     }
 
-    //metodo pra chamar a query do dashboard (da repository)
-    public List<EstatisticaDTO> obterEstatisticas() {
-        return repository.findTempoTotalPorMateria();
+    // dashboard filtrado por usuário
+    public List<EstatisticaDTO> obterEstatisticas(Long usuarioId) {
+        return repository.findTempoTotalPorMateria(usuarioId);
+    }
+
+    // dashboard pro admin
+    public List<EstatisticaDTO> obterEstatisticasGerais() {
+        return repository.findTempoTotalGeral();
     }
 
     public SessaoEstudo salvar(SessaoEstudo sessao) {
         return repository.save(sessao);
     }
 
-    public Optional<SessaoEstudo> buscarUltimaSessao() {
-        return repository.findFirstByOrderByStartTimeDesc();
+    // Busca a última sessão especificamente DESTE usuário
+    public Optional<SessaoEstudo> buscarUltimaSessao(Long usuarioId) {
+        return repository.findFirstByUsuarioIdOrderByStartTimeDesc(usuarioId);
     }
 }

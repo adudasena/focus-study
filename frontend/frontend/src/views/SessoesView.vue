@@ -37,11 +37,13 @@ async function finalizarESalvar() {
     pausarTimer()
     if (segundos.value < 5) return alert("Sessão muito curta!")
 
+    const logadoId = localStorage.getItem('usuario_id');
+    
     const payload = {
         startTime: new Date().toISOString(),
         durationSeconds: segundos.value,
         materia: { id: materiaSelecionada.value },
-        usuario: { id: 1 }
+        usuario: { id: logadoId }
     }
 
     try {

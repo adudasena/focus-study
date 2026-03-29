@@ -39,7 +39,7 @@ public class Usuario implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return this.papeis.stream()
-                .map(papel -> new SimpleGrantedAuthority("ROLE_" + papel.getPapel().toUpperCase()))
+                .map(papel -> new SimpleGrantedAuthority("ROLE_" + papel.getPapel()))
                 .collect(Collectors.toList());
     }
 
