@@ -1,0 +1,20 @@
+# ⚙️ Focus Study - Backend
+
+This is the core API of the Focus Study application, built with **Java** and **Spring Boot**. It handles authentication, data persistence, and business logic.
+
+## 🛠️ Tech Stack
+* **Language:** Java 17
+* **Framework:** Spring Boot 3.x
+* **Security:** Spring Security & JWT (JSON Web Token)
+* **Database:** PostgreSQL
+* **ORM:** Spring Data JPA / Hibernate
+
+## 🔒 Security Features
+* **Role-Based Access Control (RBAC):** Users are divided into `ROLE_USER` and `ROLE_ADMIN` to ensure restricted access to sensitive features.
+* **Data Isolation:** Implementation of custom filters to ensure users can only view and manage their own study data.
+
+## 🚀 Getting Started
+1. Configure your database settings in `src/main/resources/application.properties`.
+2. Run the application:
+   ```bash
+   ./mvnw spring-boot:run

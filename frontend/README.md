@@ -1,0 +1,19 @@
+# 💻 Focus Study - Frontend
+
+The user interface for Focus Study, developed with **Vue.js**. It provides a clean and responsive dashboard for students to manage their routines.
+
+## 🛠️ Tech Stack
+* **Framework:** Vue.js 3
+* **State Management:** Pinia / Vuex
+* **HTTP Client:** Axios (for API communication)
+* **Styling:** CSS3 / Modern UI patterns
+
+## ✨ Main Features
+* **Auth Integration:** Login and register flows connected to the Spring Boot backend.
+* **Personal Dashboard:** Dynamic statistics and task management.
+* **Protected Routes:** Navigation guards to prevent unauthorized access.
+
+## 🚀 Getting Started
+1. Install dependencies:
+   ```bash
+   npm install
