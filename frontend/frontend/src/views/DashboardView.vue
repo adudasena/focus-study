@@ -106,7 +106,6 @@ onMounted(carregarDados)
 .chart-section { display: flex; gap: 30px; align-items: flex-start; flex-wrap: wrap; }
 .chart-wrapper { flex: 1; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); height: 350px; }
 
-/* Estilos da Legenda Personalizada */
 .legenda-custom { flex: 1; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
 .legenda-custom h3 { margin-top: 0; color: #555; border-bottom: 2px solid #eee; padding-bottom: 10px; margin-bottom: 15px; }
 
