@@ -37,7 +37,6 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.GET, "/materias").authenticated()
                         // editar e excluir matéria- só ADMIN
                         .requestMatchers("/materias/**").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.GET, "/materias").authenticated()
 
                         // sessões- criar e ver pra todos
                         .requestMatchers(HttpMethod.POST, "/sessoes/novo").authenticated()
